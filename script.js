@@ -21,9 +21,9 @@ songItems.forEach((element, i) => {
     element.getElementsByClassName("songName")[0].innerText = songs[i].songName;
 })
 
-// handel the lay pause button
+// handel the play pause button
 masterPlay.addEventListener('click', () => {
-    if (audioElement.paused2 || audioElement.currentTime <= 0) {
+    if (audioElement.paused || audioElement.currentTime <= 0) {
         audioElement.play();
         masterPlay.classList.remove('fa-play');
         masterPlay.classList.add('fa-pause');
@@ -64,10 +64,10 @@ const makeAllPlays =()=>{
 Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) => {
     element.addEventListener('click', (e) => {
         makeAllPlays();
-        index = parseInt(e.target.id);
+        songIndex = parseInt(e.target.id);
         e.target.classList.remove('fa-play');
         e.target.classList.add('fa-pause');
-        audioElement.src = `songs/${index}.mp3`;
+        audioElement.src = `songs/${songIndex}.mp3`;
         audioElement.currentTime = 0;
         audioElement.play();
         masterPlay.classList.remove('fa-play');
@@ -78,3 +78,50 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) =>
     })
 
 })
+document.getElementById('next').addEventListener('click',()=>{
+    if(songIndex>3){
+        songIndex=1;
+    }
+    else{
+        songIndex += 1;
+    }
+    audioElement.src = `songs/${songIndex}.mp3`;
+    audioElement.currentTime = 0;
+    audioElement.play();
+    masterPlay.classList.remove('fa-play');
+    masterPlay.classList.add('fa-pause');
+    Gif.style.opacity = 1
+})
+document.getElementById('previous').addEventListener('click',()=>{
+    if(songIndex<=1){
+        songIndex=1;
+    }
+    else{
+        songIndex -= 1;
+    }
+    audioElement.src = `songs/${songIndex}.mp3`;
+    audioElement.currentTime = 0;
+    audioElement.play();
+    masterPlay.classList.remove('fa-play');
+    masterPlay.classList.add('fa-pause');
+    Gif.style.opacity = 1
+})
+document.getElementById('skip+').addEventListener('click',()=>{
+    audioElement.src = `songs/${songIndex}.mp3`;
+    myProgressbar.value = progress+10;
+   
+})
+document.getElementById('skip-').addEventListener('click',()=>{
+    audioElement.src = `songs/${songIndex}.mp3`;
+    myProgressbar.value = progress+10;
+    
+})
+
+// handle the 10 s skip and prev button
+// getElementById('skip+').onclick = function() {
+//     masterPlay[0].seek(masterPlay[0].currentTime() + 10);
+//     }
+
+//     getElementById('skip+').onclick = function() {
+//     masterPlay[0].seek(Math.max(0, masterPlay[0].currentTime() - 10));
+//     }
